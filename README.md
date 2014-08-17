@@ -1,6 +1,8 @@
-skywarp_cpp
+#skywarp++
 
 Data streaming and rpc enabler library for c++ applications
+
+Project site [http://skywarpcpp.wordpress.com](http://skywarpcpp.wordpress.com)
 
 ###Introduction
 
@@ -32,3 +34,5 @@ Main features are in testing phase. New features are still in development.
 * Real time monitoring systems.
 * Real time market data streaming.
 * Data adquisition and [SCADA](http://en.wikipedia.org/wiki/SCADA) applications.
+
+For mor information and examples please visit the [project site](http://skywarpcpp.wordpress.com).
