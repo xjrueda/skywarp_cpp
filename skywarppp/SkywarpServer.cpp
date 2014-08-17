@@ -55,7 +55,7 @@ SkywarpServer::SkywarpServer() {
     pubSubManager.setSessionManager(sessionManager);
 
     umask(0);
-    logfile.open("./fireFlight.log");
+    logfile.open("./skywarppp.log");
     server.get_alog().set_ostream(&logfile);
 
 
