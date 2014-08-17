@@ -7,7 +7,7 @@ Project site [http://skywarpcpp.wordpress.com](http://skywarpcpp.wordpress.com)
 ###Introduction
 
 
-Skywarp++ is an [(BSD license)](http://es.wikipedia.org/wiki/Licencia_BSD) open source server library that enables the use of remote procedure for exposition of functionalities and real time data [streaming](http://en.wikipedia.org/wiki/Stream_(computing)) capabilities to any application written in c++.
+Skywarp++ is an [(BSD license)](http://es.wikipedia.org/wiki/Licencia_BSD) open source server library that enables the use of remote procedure call for exposition of functionalities and real time data [streaming](http://en.wikipedia.org/wiki/Stream_(computing)) capabilities to any application written in c++.
 
 The c++ applications that uses skywarp++, can expose your functionalities through of [JSON-RPC 2.0](http://www.jsonrpc.org/specification) subprotocol in order to be used by clients that supports websocket transport protocol.
 
