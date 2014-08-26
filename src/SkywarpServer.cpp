@@ -46,6 +46,7 @@ SkywarpServer::SkywarpServer() {
     // Initialize Asio Transport
     server.init_asio();
     // Register handler callbacks
+    server.set_validate_handler(bind(&SkywarpServer::onValidateSubprotocol, this, ::_1));
     server.set_open_handler(bind(&SkywarpServer::onOpen, this, ::_1));
     server.set_close_handler(bind(&SkywarpServer::onClose, this, ::_1));
     server.set_message_handler(bind(&SkywarpServer::onMessage, this, ::_1, ::_2));
@@ -88,6 +89,29 @@ SkywarpServer::SkywarpServer() {
 
 SkywarpServer::~SkywarpServer() {
 
+}
+
+bool SkywarpServer::onValidateSubprotocol(websocketpp::connection_hdl hdl) {
+    try {
+        Server::connection_ptr con = server.get_con_from_hdl(hdl);
+        const std::vector<std::string> & subp_requests = con->get_requested_subprotocols();
+        if (subp_requests.empty()) {
+            return false;
+        } else {
+            std::vector<std::string>::const_iterator it;
+            for (it = subp_requests.begin(); it != subp_requests.end(); ++it) {
+                if (*it == "JSON-RPC") {
+                    con->select_subprotocol(*it);
+                    cout << "protocol " << *it << " accepted." << endl;
+                    return true;
+                }
+            }
+        }
+        cout << "No valid protocol found." << endl;
+        return false;
+    } catch (...) {
+        return false;
+    }
 }
 
 void SkywarpServer::onOpen(websocketpp::connection_hdl hdl) {
@@ -163,7 +187,7 @@ void SkywarpServer::inboundProcessor(std::promise<std::string>& p) {
                 string method = msgParser.getMethod();
                 Json::Value params = msgParser.getParams();
                 // delegates the method to it handler
-                delegatorManager.callDelegate(method, params, session->getId(), requestId);
+                delegatorManager.callDelegate(method, params, session, requestId);
             } catch (JsonRPCMethodException& e0) {
                 session->sendMessage(e0.what());
             } catch (JsonRPCParseError& e1) {

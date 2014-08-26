@@ -59,6 +59,7 @@ class SkywarpServer {
 public:
     SkywarpServer();
     virtual ~SkywarpServer();
+    bool onValidateSubprotocol(websocketpp::connection_hdl);
     void onClose(websocketpp::connection_hdl);
     void onMessage(websocketpp::connection_hdl, Server::message_ptr msg);
     void onOpen(websocketpp::connection_hdl);

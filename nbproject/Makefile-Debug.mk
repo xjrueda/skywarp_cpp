@@ -35,15 +35,15 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/skywarppp/ClientSession.o \
-	${OBJECTDIR}/skywarppp/JsonRPCParser.o \
-	${OBJECTDIR}/skywarppp/JsonSerializer.o \
-	${OBJECTDIR}/skywarppp/MethodDelegatorManager.o \
-	${OBJECTDIR}/skywarppp/PublishSubscriptionManager.o \
-	${OBJECTDIR}/skywarppp/SessionManager.o \
-	${OBJECTDIR}/skywarppp/SkywarpServer.o \
-	${OBJECTDIR}/skywarppp/Topic.o \
-	${OBJECTDIR}/skywarppp/jsoncpp.o
+	${OBJECTDIR}/src/ClientSession.o \
+	${OBJECTDIR}/src/JsonRPCParser.o \
+	${OBJECTDIR}/src/JsonSerializer.o \
+	${OBJECTDIR}/src/MethodDelegatorManager.o \
+	${OBJECTDIR}/src/PublishSubscriptionManager.o \
+	${OBJECTDIR}/src/SessionManager.o \
+	${OBJECTDIR}/src/SkywarpServer.o \
+	${OBJECTDIR}/src/Topic.o \
+	${OBJECTDIR}/src/jsoncpp.o
 
 
 # C Compiler Flags
@@ -72,50 +72,50 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libskywarp_cpp.${CND_DLIB_EXT}: ${OBJ
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libskywarp_cpp.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -dynamiclib -install_name libskywarp_cpp.${CND_DLIB_EXT} -fPIC
 
-${OBJECTDIR}/skywarppp/ClientSession.o: skywarppp/ClientSession.cpp 
-	${MKDIR} -p ${OBJECTDIR}/skywarppp
+${OBJECTDIR}/src/ClientSession.o: src/ClientSession.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Iskywarppp -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/skywarppp/ClientSession.o skywarppp/ClientSession.cpp
+	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Isrc -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ClientSession.o src/ClientSession.cpp
 
-${OBJECTDIR}/skywarppp/JsonRPCParser.o: skywarppp/JsonRPCParser.cpp 
-	${MKDIR} -p ${OBJECTDIR}/skywarppp
+${OBJECTDIR}/src/JsonRPCParser.o: src/JsonRPCParser.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Iskywarppp -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/skywarppp/JsonRPCParser.o skywarppp/JsonRPCParser.cpp
+	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Isrc -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/JsonRPCParser.o src/JsonRPCParser.cpp
 
-${OBJECTDIR}/skywarppp/JsonSerializer.o: skywarppp/JsonSerializer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/skywarppp
+${OBJECTDIR}/src/JsonSerializer.o: src/JsonSerializer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Iskywarppp -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/skywarppp/JsonSerializer.o skywarppp/JsonSerializer.cpp
+	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Isrc -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/JsonSerializer.o src/JsonSerializer.cpp
 
-${OBJECTDIR}/skywarppp/MethodDelegatorManager.o: skywarppp/MethodDelegatorManager.cpp 
-	${MKDIR} -p ${OBJECTDIR}/skywarppp
+${OBJECTDIR}/src/MethodDelegatorManager.o: src/MethodDelegatorManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Iskywarppp -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/skywarppp/MethodDelegatorManager.o skywarppp/MethodDelegatorManager.cpp
+	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Isrc -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/MethodDelegatorManager.o src/MethodDelegatorManager.cpp
 
-${OBJECTDIR}/skywarppp/PublishSubscriptionManager.o: skywarppp/PublishSubscriptionManager.cpp 
-	${MKDIR} -p ${OBJECTDIR}/skywarppp
+${OBJECTDIR}/src/PublishSubscriptionManager.o: src/PublishSubscriptionManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Iskywarppp -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/skywarppp/PublishSubscriptionManager.o skywarppp/PublishSubscriptionManager.cpp
+	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Isrc -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/PublishSubscriptionManager.o src/PublishSubscriptionManager.cpp
 
-${OBJECTDIR}/skywarppp/SessionManager.o: skywarppp/SessionManager.cpp 
-	${MKDIR} -p ${OBJECTDIR}/skywarppp
+${OBJECTDIR}/src/SessionManager.o: src/SessionManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Iskywarppp -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/skywarppp/SessionManager.o skywarppp/SessionManager.cpp
+	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Isrc -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SessionManager.o src/SessionManager.cpp
 
-${OBJECTDIR}/skywarppp/SkywarpServer.o: skywarppp/SkywarpServer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/skywarppp
+${OBJECTDIR}/src/SkywarpServer.o: src/SkywarpServer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Iskywarppp -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/skywarppp/SkywarpServer.o skywarppp/SkywarpServer.cpp
+	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Isrc -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SkywarpServer.o src/SkywarpServer.cpp
 
-${OBJECTDIR}/skywarppp/Topic.o: skywarppp/Topic.cpp 
-	${MKDIR} -p ${OBJECTDIR}/skywarppp
+${OBJECTDIR}/src/Topic.o: src/Topic.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Iskywarppp -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/skywarppp/Topic.o skywarppp/Topic.cpp
+	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Isrc -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Topic.o src/Topic.cpp
 
-${OBJECTDIR}/skywarppp/jsoncpp.o: skywarppp/jsoncpp.cpp 
-	${MKDIR} -p ${OBJECTDIR}/skywarppp
+${OBJECTDIR}/src/jsoncpp.o: src/jsoncpp.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Iskywarppp -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/skywarppp/jsoncpp.o skywarppp/jsoncpp.cpp
+	$(COMPILE.cc) -g -D_WEBSOCKETPP_CPP11_STL_ -I/usr/local/include/json -I/usr/local/include/websocketpp -Isrc -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/jsoncpp.o src/jsoncpp.cpp
 
 # Subprojects
 .build-subprojects:

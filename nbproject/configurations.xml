@@ -4,17 +4,17 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>skywarppp/ClientSession.h</itemPath>
-      <itemPath>skywarppp/JsonRPCExceptions.h</itemPath>
-      <itemPath>skywarppp/JsonRPCParser.h</itemPath>
-      <itemPath>skywarppp/JsonSerializer.h</itemPath>
-      <itemPath>skywarppp/MethodDelegatorManager.h</itemPath>
-      <itemPath>skywarppp/PublishSubscriptionManager.h</itemPath>
-      <itemPath>skywarppp/SessionManager.h</itemPath>
-      <itemPath>skywarppp/SkywarpExceptions.h</itemPath>
-      <itemPath>skywarppp/SkywarpServer.h</itemPath>
-      <itemPath>skywarppp/Topic.h</itemPath>
-      <itemPath>skywarppp/globalDatatypes.h</itemPath>
+      <itemPath>src/ClientSession.h</itemPath>
+      <itemPath>src/JsonRPCExceptions.h</itemPath>
+      <itemPath>src/JsonRPCParser.h</itemPath>
+      <itemPath>src/JsonSerializer.h</itemPath>
+      <itemPath>src/MethodDelegatorManager.h</itemPath>
+      <itemPath>src/PublishSubscriptionManager.h</itemPath>
+      <itemPath>src/SessionManager.h</itemPath>
+      <itemPath>src/SkywarpExceptions.h</itemPath>
+      <itemPath>src/SkywarpServer.h</itemPath>
+      <itemPath>src/Topic.h</itemPath>
+      <itemPath>src/globalDatatypes.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -23,15 +23,15 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>skywarppp/ClientSession.cpp</itemPath>
-      <itemPath>skywarppp/JsonRPCParser.cpp</itemPath>
-      <itemPath>skywarppp/JsonSerializer.cpp</itemPath>
-      <itemPath>skywarppp/MethodDelegatorManager.cpp</itemPath>
-      <itemPath>skywarppp/PublishSubscriptionManager.cpp</itemPath>
-      <itemPath>skywarppp/SessionManager.cpp</itemPath>
-      <itemPath>skywarppp/SkywarpServer.cpp</itemPath>
-      <itemPath>skywarppp/Topic.cpp</itemPath>
-      <itemPath>skywarppp/jsoncpp.cpp</itemPath>
+      <itemPath>src/ClientSession.cpp</itemPath>
+      <itemPath>src/JsonRPCParser.cpp</itemPath>
+      <itemPath>src/JsonSerializer.cpp</itemPath>
+      <itemPath>src/MethodDelegatorManager.cpp</itemPath>
+      <itemPath>src/PublishSubscriptionManager.cpp</itemPath>
+      <itemPath>src/SessionManager.cpp</itemPath>
+      <itemPath>src/SkywarpServer.cpp</itemPath>
+      <itemPath>src/Topic.cpp</itemPath>
+      <itemPath>src/jsoncpp.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -60,7 +60,7 @@
           <incDir>
             <pElem>/usr/local/include/json</pElem>
             <pElem>/usr/local/include/websocketpp</pElem>
-            <pElem>skywarppp</pElem>
+            <pElem>src</pElem>
           </incDir>
           <commandLine>-w -O3 -std=c++0x</commandLine>
           <preprocessorList>
@@ -77,54 +77,45 @@
       </item>
       <item path="README.md" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/ClientSession.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/ClientSession.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/ClientSession.h" ex="false" tool="3" flavor2="0">
+      <item path="src/ClientSession.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/JsonRPCExceptions.h" ex="false" tool="3" flavor2="0">
+      <item path="src/JsonRPCExceptions.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/JsonRPCParser.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/JsonRPCParser.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/JsonRPCParser.h" ex="false" tool="3" flavor2="0">
+      <item path="src/JsonRPCParser.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/JsonSerializer.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/JsonSerializer.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/JsonSerializer.h" ex="false" tool="3" flavor2="0">
+      <item path="src/JsonSerializer.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/MethodDelegatorManager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="src/MethodDelegatorManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/MethodDelegatorManager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/MethodDelegatorManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/PublishSubscriptionManager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="src/PublishSubscriptionManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/PublishSubscriptionManager.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
+      <item path="src/PublishSubscriptionManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/SessionManager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/SessionManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/SessionManager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/SessionManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/SkywarpExceptions.h" ex="false" tool="3" flavor2="0">
+      <item path="src/SkywarpExceptions.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/SkywarpServer.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/SkywarpServer.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/SkywarpServer.h" ex="false" tool="3" flavor2="0">
+      <item path="src/SkywarpServer.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/Topic.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/Topic.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/Topic.h" ex="false" tool="3" flavor2="0">
+      <item path="src/Topic.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/globalDatatypes.h" ex="false" tool="3" flavor2="0">
+      <item path="src/globalDatatypes.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/jsoncpp.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/jsoncpp.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -151,54 +142,45 @@
       </item>
       <item path="README.md" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/ClientSession.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/ClientSession.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/ClientSession.h" ex="false" tool="3" flavor2="0">
+      <item path="src/ClientSession.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/JsonRPCExceptions.h" ex="false" tool="3" flavor2="0">
+      <item path="src/JsonRPCExceptions.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/JsonRPCParser.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/JsonRPCParser.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/JsonRPCParser.h" ex="false" tool="3" flavor2="0">
+      <item path="src/JsonRPCParser.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/JsonSerializer.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/JsonSerializer.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/JsonSerializer.h" ex="false" tool="3" flavor2="0">
+      <item path="src/JsonSerializer.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/MethodDelegatorManager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="src/MethodDelegatorManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/MethodDelegatorManager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/MethodDelegatorManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/PublishSubscriptionManager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="src/PublishSubscriptionManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/PublishSubscriptionManager.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
+      <item path="src/PublishSubscriptionManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/SessionManager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/SessionManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/SessionManager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/SessionManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/SkywarpExceptions.h" ex="false" tool="3" flavor2="0">
+      <item path="src/SkywarpExceptions.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/SkywarpServer.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/SkywarpServer.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/SkywarpServer.h" ex="false" tool="3" flavor2="0">
+      <item path="src/SkywarpServer.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/Topic.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/Topic.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="skywarppp/Topic.h" ex="false" tool="3" flavor2="0">
+      <item path="src/Topic.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/globalDatatypes.h" ex="false" tool="3" flavor2="0">
+      <item path="src/globalDatatypes.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="skywarppp/jsoncpp.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/jsoncpp.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

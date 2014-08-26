@@ -48,19 +48,17 @@ void MethodDelegatorManager::unSubscribeDelegate(string methodName) {
     applicationDelegatesMap.erase(methodName);
 }
 
-void MethodDelegatorManager::callDelegate(string methodName, Json::Value arguments, int sessionId, string requestId) {
+void MethodDelegatorManager::callDelegate(string methodName, Json::Value arguments, SessionManager::Session session, string requestId) {
     typename std::map<string, Delegate>::iterator it;
     std::future<void> f1;
     it = applicationDelegatesMap.find(methodName);
     if (it != applicationDelegatesMap.end()) {
         try {
             ApplicationDelegateType task = it->second.getDelegate();
-            if (it->second.getlaunchAsync()) {
-                
-                f1 = std::async(std::launch::async,task,arguments, sessionId, requestId);
-                f1.get(); 
+            if (it->second.getlaunchAsync()) {                
+                f1 = std::async(std::launch::async,task,arguments, session, requestId); 
             } else
-                task(arguments, sessionId, requestId);
+                task(arguments, session, requestId);
         }catch (const exception& e) {
             throw JsonRPCMethodException(requestId, e.what());
         }

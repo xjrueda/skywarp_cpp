@@ -33,16 +33,17 @@
 #include <functional>
 #include <json/json.h>
 #include "JsonRPCExceptions.h"
+#include "SessionManager.h"
 
 using namespace std;
 class MethodDelegatorManager {
 public:
-    typedef std::function<void(Json::Value, int, string)> ApplicationDelegateType;
+    typedef std::function<void(Json::Value, SessionManager::Session, string)> ApplicationDelegateType;
     MethodDelegatorManager();
     virtual ~MethodDelegatorManager();
     void subscribeDelegate(string, ApplicationDelegateType, bool);
     void unSubscribeDelegate(string);
-    void callDelegate(string, Json::Value, int, string);
+    void callDelegate(string, Json::Value, SessionManager::Session, string);
 private:
     struct Delegate {
         void setDelegate(ApplicationDelegateType delegate, bool async) {

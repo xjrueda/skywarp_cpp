@@ -62,15 +62,15 @@ void PublishSubscriptionManager::unSubscribeAll(SessionManager::Session session)
     }
 }
 
-void PublishSubscriptionManager::onSubscribe(Json::Value params, int sessionId, string requestId) {
+void PublishSubscriptionManager::onSubscribe(Json::Value params, SessionManager::Session session, string requestId) {
     string topicName = params["topic"].asString();
-    SessionManager::Session session = sessionManager->getSessionFromId(sessionId);
+    //SessionManager::Session session = sessionManager->getSessionFromId(sessionId);
     AvailableTopics[topicName].attach(session);
 }
 
-void PublishSubscriptionManager::onUnsubscribe(Json::Value params, int sessionId, string requestId) {
+void PublishSubscriptionManager::onUnsubscribe(Json::Value params, SessionManager::Session session, string requestId) {
     string topicName = params["topic"].asString();
-    SessionManager::Session session = sessionManager->getSessionFromId(sessionId);
+    //SessionManager::Session session = sessionManager->getSessionFromId(sessionId);
     AvailableTopics[topicName].detach(session);
 }
 void PublishSubscriptionManager::setSessionManager(shared_ptr<SessionManager> sm) {

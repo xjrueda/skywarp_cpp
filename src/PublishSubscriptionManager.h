@@ -43,8 +43,8 @@ public:
     void subscribe(SessionManager::Session,string);
     void unSubscribe(SessionManager::Session,string);
     void unSubscribeAll(SessionManager::Session);
-    void onSubscribe(Json::Value, int, string);
-    void onUnsubscribe(Json::Value, int, string);
+    void onSubscribe(Json::Value, SessionManager::Session, string);
+    void onUnsubscribe(Json::Value, SessionManager::Session, string);
     void setSessionManager(shared_ptr<SessionManager>);
 private:
     map<string,Topic> AvailableTopics;

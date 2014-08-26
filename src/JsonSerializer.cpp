@@ -37,9 +37,9 @@ JsonSerializer::JsonSerializer() {
 JsonSerializer::~JsonSerializer() {
 }
 
-string JsonSerializer::serializeRPCResult(string topicName, Json::Value appMessage) {
+string JsonSerializer::serializeRPCResult(string requestId, Json::Value appMessage) {
     try {
-        Json::Value JsonRPCResult = generateResultEnvelope(topicName, appMessage);
+        Json::Value JsonRPCResult = generateResultEnvelope(requestId, appMessage);
         Json::FastWriter writer;
         string serializedJsonRPCResult = writer.write(JsonRPCResult);
         return serializedJsonRPCResult;
@@ -50,12 +50,12 @@ string JsonSerializer::serializeRPCResult(string topicName, Json::Value appMessa
 
 }
 
-Json::Value JsonSerializer::generateResultEnvelope(string topicName, Json::Value appMessage) {
+Json::Value JsonSerializer::generateResultEnvelope(string requestId, Json::Value appMessage) {
     try {
         Json::Value JsonRPCResult;
         JsonRPCResult["jsonrpc"] = "2.0";
         JsonRPCResult["result"] = appMessage;
-        JsonRPCResult["id"] = topicName;
+        JsonRPCResult["id"] = requestId;
         return JsonRPCResult;
     } catch (...) {
         // pending exception handling
