@@ -27,7 +27,7 @@
 
 #include "ClientSession.h"
 
-ClientSession::ClientSession(){
+ClientSession::ClientSession() {
 }
 
 ClientSession::ClientSession(websocketpp::connection_hdl conHdl, Server& srv, int id) : connectionHdl(conHdl), server(&srv), sessionId(id) {
@@ -55,6 +55,12 @@ void ClientSession::sendMessage(string messageText) {
 
 void ClientSession::sendMessage(Server::message_ptr msg) {
     server->send(connectionHdl, msg);
+}
+
+void ClientSession::sendResultMessage(string requestId, Json::Value resultData) {
+    JsonSerializer serializer;
+    string resultMessage = serializer.serializeRPCResult(requestId,resultData);
+    server->send(connectionHdl, resultMessage, websocketpp::frame::opcode::text);
 }
 
 int ClientSession::getId() {

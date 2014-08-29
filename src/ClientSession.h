@@ -30,6 +30,8 @@
 
 
 #include "globalDatatypes.h"
+#include "JsonSerializer.h"
+#include "json/json.h"
 
 using namespace std;
 
@@ -43,6 +45,7 @@ public:
     void setServer(Server&);
     void sendMessage(string);
     void sendMessage(Server::message_ptr);
+    void sendResultMessage(string,Json::Value);
     int getId();
     websocketpp::connection_hdl getConnectionHandler();   
 private:
