@@ -36,23 +36,25 @@
 
 using namespace std;
 
-class JsonRPCParser {
-public:
-    JsonRPCParser();
-    virtual ~JsonRPCParser();
-    string getVersion();
-    string getMethod();
-    Json::Value getParams();
-    string getId();
-    bool ready();
-    void parseMessage(string);
-private:
-    Json::Value jsonMessage;
-    bool parsed;
-    string id;
-    string method;
-    string version;
-};
+namespace skywarp {
 
+    class JsonRPCParser {
+    public:
+        JsonRPCParser();
+        virtual ~JsonRPCParser();
+        string getVersion();
+        string getMethod();
+        Json::Value getParams();
+        string getId();
+        bool ready();
+        void parseMessage(string);
+    private:
+        Json::Value jsonMessage;
+        bool parsed;
+        string id;
+        string method;
+        string version;
+    };
+}
 #endif	/* JSONRPCPARSER_H */
 

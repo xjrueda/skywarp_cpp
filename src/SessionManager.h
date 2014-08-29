@@ -38,30 +38,32 @@
 
 using namespace std;
 
-class SessionManager {
-public:
-    typedef std::shared_ptr<ClientSession> Session;
-    SessionManager();
-    virtual ~SessionManager();
-    void setServer(Server&);
-    void createSession(websocketpp::connection_hdl);
-    void removeSession(websocketpp::connection_hdl);
-    Session getSessionFromId(int);
-    Session getsessionFromHandler(websocketpp::connection_hdl);
-    void broadcastMessage(string); 
-    void broadcastMessage(Server::message_ptr); 
-private:
-    int getNextSessiionId();
-    Server* server;
-    int nextSessionId;
-    
-    typedef std::map<websocketpp::connection_hdl,shared_ptr<ClientSession>,std::owner_less<websocketpp::connection_hdl>> SessionListByHandlerListType;
-    typedef std::map<int,shared_ptr<ClientSession>> SessionListByIdListType;
-    SessionListByHandlerListType sessionsByHandler;
-    SessionListByIdListType sessionsById; 
-    
-    mutex sessionLock;
-};
+namespace skywarp {
 
+    class SessionManager {
+    public:
+        typedef std::shared_ptr<ClientSession> Session;
+        SessionManager();
+        virtual ~SessionManager();
+        void setServer(Server&);
+        void createSession(websocketpp::connection_hdl);
+        void removeSession(websocketpp::connection_hdl);
+        Session getSessionFromId(int);
+        Session getsessionFromHandler(websocketpp::connection_hdl);
+        void broadcastMessage(string);
+        void broadcastMessage(Server::message_ptr);
+    private:
+        int getNextSessiionId();
+        Server* server;
+        int nextSessionId;
+
+        typedef std::map<websocketpp::connection_hdl, shared_ptr<ClientSession>, std::owner_less<websocketpp::connection_hdl>> SessionListByHandlerListType;
+        typedef std::map<int, shared_ptr<ClientSession>> SessionListByIdListType;
+        SessionListByHandlerListType sessionsByHandler;
+        SessionListByIdListType sessionsById;
+
+        mutex sessionLock;
+    };
+}
 #endif	/* SESSIONMANAGER_H */
 

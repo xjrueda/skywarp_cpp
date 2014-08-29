@@ -28,6 +28,8 @@
 #include "Topic.h"
 #include "SessionManager.h"
 
+namespace skywarp {
+
 Topic::Topic() {
 }
 
@@ -58,4 +60,5 @@ void Topic::notify(Server::message_ptr msg) {
     for(auto session : subscribers) {
         session->sendMessage(msg);
     }
+}
 }

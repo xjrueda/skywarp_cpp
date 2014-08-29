@@ -31,33 +31,36 @@
 
 #include "JsonSerializer.h"
 
-JsonSerializer::JsonSerializer() {
-}
+namespace skywarp {
 
-JsonSerializer::~JsonSerializer() {
-}
-
-string JsonSerializer::serializeRPCResult(string requestId, Json::Value appMessage) {
-    try {
-        Json::Value JsonRPCResult = generateResultEnvelope(requestId, appMessage);
-        Json::FastWriter writer;
-        string serializedJsonRPCResult = writer.write(JsonRPCResult);
-        return serializedJsonRPCResult;
-    } catch (std::exception& e) {
-        cout <<  "Exception serializing: " << e.what() << endl;
-        std::cerr << "Exception serializing: " << e.what();
+    JsonSerializer::JsonSerializer() {
     }
 
-}
+    JsonSerializer::~JsonSerializer() {
+    }
 
-Json::Value JsonSerializer::generateResultEnvelope(string requestId, Json::Value appMessage) {
-    try {
-        Json::Value JsonRPCResult;
-        JsonRPCResult["jsonrpc"] = "2.0";
-        JsonRPCResult["result"] = appMessage;
-        JsonRPCResult["id"] = requestId;
-        return JsonRPCResult;
-    } catch (...) {
-        // pending exception handling
+    string JsonSerializer::serializeRPCResult(string requestId, Json::Value appMessage) {
+        try {
+            Json::Value JsonRPCResult = generateResultEnvelope(requestId, appMessage);
+            Json::FastWriter writer;
+            string serializedJsonRPCResult = writer.write(JsonRPCResult);
+            return serializedJsonRPCResult;
+        } catch (std::exception& e) {
+            cout << "Exception serializing: " << e.what() << endl;
+            std::cerr << "Exception serializing: " << e.what();
+        }
+
+    }
+
+    Json::Value JsonSerializer::generateResultEnvelope(string requestId, Json::Value appMessage) {
+        try {
+            Json::Value JsonRPCResult;
+            JsonRPCResult["jsonrpc"] = "2.0";
+            JsonRPCResult["result"] = appMessage;
+            JsonRPCResult["id"] = requestId;
+            return JsonRPCResult;
+        } catch (...) {
+            // pending exception handling
+        }
     }
 }

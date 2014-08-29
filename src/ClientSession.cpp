@@ -27,47 +27,50 @@
 
 #include "ClientSession.h"
 
-ClientSession::ClientSession() {
-}
+namespace skywarp {
 
-ClientSession::ClientSession(websocketpp::connection_hdl conHdl, Server& srv, int id) : connectionHdl(conHdl), server(&srv), sessionId(id) {
+    ClientSession::ClientSession() {
+    }
 
-}
+    ClientSession::ClientSession(websocketpp::connection_hdl conHdl, Server& srv, int id) : connectionHdl(conHdl), server(&srv), sessionId(id) {
 
-ClientSession::~ClientSession() {
-}
+    }
 
-void ClientSession::setId(int id) {
-    sessionId = id;
-}
+    ClientSession::~ClientSession() {
+    }
 
-void ClientSession::setConnectionHandler(websocketpp::connection_hdl conHdl) {
-    connectionHdl = conHdl;
-}
+    void ClientSession::setId(int id) {
+        sessionId = id;
+    }
 
-void ClientSession::setServer(Server& srv) {
-    server = &srv;
-}
+    void ClientSession::setConnectionHandler(websocketpp::connection_hdl conHdl) {
+        connectionHdl = conHdl;
+    }
 
-void ClientSession::sendMessage(string messageText) {
-    server->send(connectionHdl, messageText, websocketpp::frame::opcode::text);
-}
+    void ClientSession::setServer(Server& srv) {
+        server = &srv;
+    }
 
-void ClientSession::sendMessage(Server::message_ptr msg) {
-    server->send(connectionHdl, msg);
-}
+    void ClientSession::sendMessage(string messageText) {
+        server->send(connectionHdl, messageText, websocketpp::frame::opcode::text);
+    }
 
-void ClientSession::sendResultMessage(string requestId, Json::Value resultData) {
-    JsonSerializer serializer;
-    string resultMessage = serializer.serializeRPCResult(requestId,resultData);
-    server->send(connectionHdl, resultMessage, websocketpp::frame::opcode::text);
-}
+    void ClientSession::sendMessage(Server::message_ptr msg) {
+        server->send(connectionHdl, msg);
+    }
 
-int ClientSession::getId() {
-    return sessionId;
-}
+    void ClientSession::sendResultMessage(string requestId, Json::Value resultData) {
+        JsonSerializer serializer;
+        string resultMessage = serializer.serializeRPCResult(requestId, resultData);
+        server->send(connectionHdl, resultMessage, websocketpp::frame::opcode::text);
+    }
 
-websocketpp::connection_hdl ClientSession::getConnectionHandler() {
-    return connectionHdl;
+    int ClientSession::getId() {
+        return sessionId;
+    }
+
+    websocketpp::connection_hdl ClientSession::getConnectionHandler() {
+        return connectionHdl;
+    }
 }
 

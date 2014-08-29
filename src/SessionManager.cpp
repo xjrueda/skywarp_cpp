@@ -29,78 +29,81 @@
 
 #include "SessionManager.h"
 
-SessionManager::SessionManager() {
-}
+namespace skywarp {
 
-SessionManager::~SessionManager() {
-}
-
-void SessionManager::createSession(websocketpp::connection_hdl conHdl) {
-    int id;
-    unique_lock<mutex> lock(sessionLock);
-    {
-        id = getNextSessiionId();
-        std::shared_ptr<ClientSession> session(new ClientSession());
-        session->setConnectionHandler(conHdl);
-        session->setId(id);
-        session->setServer(*server);
-        sessionsByHandler[conHdl] = session;
-        sessionsById[id] = session;
-    }
-};
-
-void SessionManager::removeSession(websocketpp::connection_hdl conHdl) {
-    int id;
-    unique_lock<mutex> lock(sessionLock);
-    {
-        int id = sessionsByHandler[conHdl]->getId();
-        sessionsByHandler.erase(conHdl);
-        sessionsById.erase(id);
-    }
-};
-
-void SessionManager::setServer(Server& srv) {
-    server = &srv;
-}
-
-SessionManager::Session SessionManager::getSessionFromId(int id) {
-    try {
-        return sessionsById[id];
-    } catch (...) {
-        throw InvalidSessionId(id);
+    SessionManager::SessionManager() {
     }
 
-};
-
-SessionManager::Session SessionManager::getsessionFromHandler(websocketpp::connection_hdl conHdl) {
-    try {
-        return sessionsByHandler[conHdl];
-    } catch (...) {
-        throw InvalidConnectionHandler();
+    SessionManager::~SessionManager() {
     }
-};
 
-void SessionManager::broadcastMessage(string messageText) {
-    try {
-        SessionListByIdListType::iterator it;
-        for (it = sessionsById.begin(); it != sessionsById.end(); it++) {
-            it->second->sendMessage(messageText);
+    void SessionManager::createSession(websocketpp::connection_hdl conHdl) {
+        int id;
+        unique_lock<mutex> lock(sessionLock);
+        {
+            id = getNextSessiionId();
+            std::shared_ptr<ClientSession> session(new ClientSession());
+            session->setConnectionHandler(conHdl);
+            session->setId(id);
+            session->setServer(*server);
+            sessionsByHandler[conHdl] = session;
+            sessionsById[id] = session;
         }
-    } catch (...) {
-    }
-}
+    };
 
-void SessionManager::broadcastMessage(Server::message_ptr msg) {
-    try {
-        SessionListByIdListType::iterator it;
-        for (it = sessionsById.begin(); it != sessionsById.end(); it++) {
-            it->second->sendMessage(msg);
+    void SessionManager::removeSession(websocketpp::connection_hdl conHdl) {
+        int id;
+        unique_lock<mutex> lock(sessionLock);
+        {
+            int id = sessionsByHandler[conHdl]->getId();
+            sessionsByHandler.erase(conHdl);
+            sessionsById.erase(id);
         }
-    } catch (...) {
-    }
-}
+    };
 
-int SessionManager::getNextSessiionId() {
-    nextSessionId++;
-    return nextSessionId;
+    void SessionManager::setServer(Server& srv) {
+        server = &srv;
+    }
+
+    SessionManager::Session SessionManager::getSessionFromId(int id) {
+        try {
+            return sessionsById[id];
+        } catch (...) {
+            throw InvalidSessionId(id);
+        }
+
+    };
+
+    SessionManager::Session SessionManager::getsessionFromHandler(websocketpp::connection_hdl conHdl) {
+        try {
+            return sessionsByHandler[conHdl];
+        } catch (...) {
+            throw InvalidConnectionHandler();
+        }
+    };
+
+    void SessionManager::broadcastMessage(string messageText) {
+        try {
+            SessionListByIdListType::iterator it;
+            for (it = sessionsById.begin(); it != sessionsById.end(); it++) {
+                it->second->sendMessage(messageText);
+            }
+        } catch (...) {
+        }
+    }
+
+    void SessionManager::broadcastMessage(Server::message_ptr msg) {
+        try {
+            SessionListByIdListType::iterator it;
+            for (it = sessionsById.begin(); it != sessionsById.end(); it++) {
+                it->second->sendMessage(msg);
+            }
+        } catch (...) {
+        }
+    }
+
+    int SessionManager::getNextSessiionId() {
+        nextSessionId++;
+        return nextSessionId;
+    }
 }

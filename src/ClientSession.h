@@ -35,24 +35,26 @@
 
 using namespace std;
 
-class ClientSession {
-public:
-    ClientSession();
-    ClientSession(websocketpp::connection_hdl, Server&, int);
-    virtual ~ClientSession();
-    void setId(int);
-    void setConnectionHandler(websocketpp::connection_hdl);
-    void setServer(Server&);
-    void sendMessage(string);
-    void sendMessage(Server::message_ptr);
-    void sendResultMessage(string,Json::Value);
-    int getId();
-    websocketpp::connection_hdl getConnectionHandler();   
-private:
-    Server* server;
-    int sessionId;
-    websocketpp::connection_hdl connectionHdl;
-};
+namespace skywarp {
+
+    class ClientSession {
+    public:
+        ClientSession();
+        ClientSession(websocketpp::connection_hdl, Server&, int);
+        virtual ~ClientSession();
+        void setId(int);
+        void setConnectionHandler(websocketpp::connection_hdl);
+        void setServer(Server&);
+        void sendMessage(string);
+        void sendMessage(Server::message_ptr);
+        void sendResultMessage(string, Json::Value);
+        int getId();
+        websocketpp::connection_hdl getConnectionHandler();
+    private:
+        Server* server;
+        int sessionId;
+        websocketpp::connection_hdl connectionHdl;
+    };
+}
 
 #endif	/* CLIENTSESSION_H */
-

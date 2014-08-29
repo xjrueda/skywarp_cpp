@@ -31,45 +31,61 @@
 #include <boost/format.hpp>
 #include <iostream>
 #include <sstream>
- 
+
 using namespace std;
 
-class InvalidSessionId : public exception {
-public:
-    InvalidSessionId(int id) : _id(id) {}
-    ~InvalidSessionId() throw () {}
-    const string what() throw () {
-        stringstream _exception;
-        _exception << boost::format(errorTemplate)  % _id;
-        return _exception.str();
-    }
-private:
-    int _id;
-    string errorTemplate = "Session id : %1% does not exist.";
-};
+namespace skywarp {
 
-class InvalidConnectionHandler : public exception {
-public:
-    InvalidConnectionHandler(){}
-    ~InvalidConnectionHandler() throw () {}
-    const string what() throw () {
-        return errorTemplate;
-    }
-private:
-    string errorTemplate = "Connection handler does not exist.";
-};
+    class InvalidSessionId : public exception {
+    public:
 
-class generalException : public exception {
-public:
-    generalException(){}
-    ~generalException() throw () {}
-    const string what() throw () {
-        return errorTemplate;
-    }
-private:
-    string errorTemplate = "An exception was raised.";
-};
+        InvalidSessionId(int id) : _id(id) {
+        }
 
+        ~InvalidSessionId() throw () {
+        }
 
+        const string what() throw () {
+            stringstream _exception;
+            _exception << boost::format(errorTemplate) % _id;
+            return _exception.str();
+        }
+    private:
+        int _id;
+        string errorTemplate = "Session id : %1% does not exist.";
+    };
+
+    class InvalidConnectionHandler : public exception {
+    public:
+
+        InvalidConnectionHandler() {
+        }
+
+        ~InvalidConnectionHandler() throw () {
+        }
+
+        const string what() throw () {
+            return errorTemplate;
+        }
+    private:
+        string errorTemplate = "Connection handler does not exist.";
+    };
+
+    class generalException : public exception {
+    public:
+
+        generalException() {
+        }
+
+        ~generalException() throw () {
+        }
+
+        const string what() throw () {
+            return errorTemplate;
+        }
+    private:
+        string errorTemplate = "An exception was raised.";
+    };
+}
 #endif	/* FIREFLIGHTEXCEPTIONS_H */
 

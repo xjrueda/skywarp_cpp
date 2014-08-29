@@ -33,64 +33,86 @@
 
 using namespace std;
 
-class JsonRPCParseError : public exception {
-public:
-    JsonRPCParseError() {}
-    ~JsonRPCParseError() throw () {}
-    const string what() throw () {
-        return errorTemplate;
-    }
-private:
-    string _id;
-    string errorTemplate = "{\"jsonrpc\": \"2.0\", \"error\": {\"code\": -32700, \"message\": \"Parse error\"},\"id\":null}";
-};
- 
-class JsonRPCInvalidRequest : public exception {
-public:
-    JsonRPCInvalidRequest(string id, string data): _id(id), _data(data) {}
-    ~JsonRPCInvalidRequest() throw () {}
-    const string what() throw () {
-        string __id = _id.empty()?"null": string("\"") + _id + string("\"");
-        stringstream _exception;
-        _exception << boost::format(errorTemplate) % _data % __id; 
-        return _exception.str(); 
-    }
-private:
-    string _id;
-    string _data;
-    string errorTemplate = "{\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32601,\"message\":\"Invalid request\",\"data\":\"%1%\"},\"id\":%2%}";
-};
+namespace skywarp {
 
-class JsonRPCMethodNotFound : public exception {
-public:
-    JsonRPCMethodNotFound(string id): _id(id) {}
-    ~JsonRPCMethodNotFound() throw () {}
-    const string what() throw () {
-        string __id = _id.empty()?"null": string("\"") + _id + string("\"");
-        stringstream _exception;
-        _exception << boost::format(errorTemplate) % __id; 
-        return _exception.str(); 
-    }
-private:
-    string _id;
-    string errorTemplate = "{\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32601,\"message\":\"Method not found\"},\"id\":%1%}";
-};
+    class JsonRPCParseError : public exception {
+    public:
 
-class JsonRPCMethodException : public exception {
-public:
-    JsonRPCMethodException(string id, string data): _id(id), _data(data) {}
-    ~JsonRPCMethodException() throw () {}
-    const string what() throw () {
-        string __id = _id.empty()?"null": string("\"") + _id + string("\"");
-        stringstream _exception;
-        _exception << boost::format(errorTemplate) % _data % __id; 
-        return _exception.str(); 
-    }
-private:
-    string _id;
-    string _data;
-    string errorTemplate = "{\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32603,\"message\":\"Internal error\",\"data\":\"%1%\"},\"id\":%2%}";
-};
+        JsonRPCParseError() {
+        }
 
+        ~JsonRPCParseError() throw () {
+        }
+
+        const string what() throw () {
+            return errorTemplate;
+        }
+    private:
+        string _id;
+        string errorTemplate = "{\"jsonrpc\": \"2.0\", \"error\": {\"code\": -32700, \"message\": \"Parse error\"},\"id\":null}";
+    };
+
+    class JsonRPCInvalidRequest : public exception {
+    public:
+
+        JsonRPCInvalidRequest(string id, string data) : _id(id), _data(data) {
+        }
+
+        ~JsonRPCInvalidRequest() throw () {
+        }
+
+        const string what() throw () {
+            string __id = _id.empty() ? "null" : string("\"") + _id + string("\"");
+            stringstream _exception;
+            _exception << boost::format(errorTemplate) % _data % __id;
+            return _exception.str();
+        }
+    private:
+        string _id;
+        string _data;
+        string errorTemplate = "{\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32601,\"message\":\"Invalid request\",\"data\":\"%1%\"},\"id\":%2%}";
+    };
+
+    class JsonRPCMethodNotFound : public exception {
+    public:
+
+        JsonRPCMethodNotFound(string id) : _id(id) {
+        }
+
+        ~JsonRPCMethodNotFound() throw () {
+        }
+
+        const string what() throw () {
+            string __id = _id.empty() ? "null" : string("\"") + _id + string("\"");
+            stringstream _exception;
+            _exception << boost::format(errorTemplate) % __id;
+            return _exception.str();
+        }
+    private:
+        string _id;
+        string errorTemplate = "{\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32601,\"message\":\"Method not found\"},\"id\":%1%}";
+    };
+
+    class JsonRPCMethodException : public exception {
+    public:
+
+        JsonRPCMethodException(string id, string data) : _id(id), _data(data) {
+        }
+
+        ~JsonRPCMethodException() throw () {
+        }
+
+        const string what() throw () {
+            string __id = _id.empty() ? "null" : string("\"") + _id + string("\"");
+            stringstream _exception;
+            _exception << boost::format(errorTemplate) % _data % __id;
+            return _exception.str();
+        }
+    private:
+        string _id;
+        string _data;
+        string errorTemplate = "{\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32603,\"message\":\"Internal error\",\"data\":\"%1%\"},\"id\":%2%}";
+    };
+}
 #endif	/* JSONRCPEXCEPTION_H */
 

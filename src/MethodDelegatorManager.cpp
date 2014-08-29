@@ -24,7 +24,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
- 
+
 #include <json/json.h>
 #include <future>
 
@@ -32,37 +32,40 @@
 
 using namespace std;
 
-MethodDelegatorManager::MethodDelegatorManager() {
-};
+namespace skywarp {
 
+    MethodDelegatorManager::MethodDelegatorManager() {
+    };
 
-MethodDelegatorManager::~MethodDelegatorManager() {
-};
+    MethodDelegatorManager::~MethodDelegatorManager() {
+    };
 
-void MethodDelegatorManager::subscribeDelegate(string methodName, ApplicationDelegateType task, bool async) {
-    Delegate delegate;
-    delegate.setDelegate(task, async);
-    applicationDelegatesMap[methodName] = delegate;
-}
-void MethodDelegatorManager::unSubscribeDelegate(string methodName) {
-    applicationDelegatesMap.erase(methodName);
-}
+    void MethodDelegatorManager::subscribeDelegate(string methodName, ApplicationDelegateType task, bool async) {
+        Delegate delegate;
+        delegate.setDelegate(task, async);
+        applicationDelegatesMap[methodName] = delegate;
+    }
 
-void MethodDelegatorManager::callDelegate(string methodName, Json::Value arguments, SessionManager::Session session, string requestId) {
-    typename std::map<string, Delegate>::iterator it;
-    std::future<void> f1;
-    it = applicationDelegatesMap.find(methodName);
-    if (it != applicationDelegatesMap.end()) {
-        try {
-            ApplicationDelegateType task = it->second.getDelegate();
-            if (it->second.getlaunchAsync()) {                
-                f1 = std::async(std::launch::async,task,arguments, session, requestId); 
-            } else
-                task(arguments, session, requestId);
-        }catch (const exception& e) {
-            throw JsonRPCMethodException(requestId, e.what());
-        }
-    } else
-        throw JsonRPCMethodNotFound(requestId);
+    void MethodDelegatorManager::unSubscribeDelegate(string methodName) {
+        applicationDelegatesMap.erase(methodName);
+    }
+
+    void MethodDelegatorManager::callDelegate(string methodName, Json::Value arguments, SessionManager::Session session, string requestId) {
+        typename std::map<string, Delegate>::iterator it;
+        std::future<void> f1;
+        it = applicationDelegatesMap.find(methodName);
+        if (it != applicationDelegatesMap.end()) {
+            try {
+                ApplicationDelegateType task = it->second.getDelegate();
+                if (it->second.getlaunchAsync()) {
+                    f1 = std::async(std::launch::async, task, arguments, session, requestId);
+                } else
+                    task(arguments, session, requestId);
+            } catch (const exception& e) {
+                throw JsonRPCMethodException(requestId, e.what());
+            }
+        } else
+            throw JsonRPCMethodNotFound(requestId);
+    }
 }
 

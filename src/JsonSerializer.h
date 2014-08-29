@@ -32,14 +32,18 @@
 
 using namespace std;
 
-class JsonSerializer {
-public:
-    JsonSerializer();
-    virtual ~JsonSerializer();
-    string serializeRPCResult(string,Json::Value);
-private:
-    Json::Value generateResultEnvelope(string, Json::Value);
-};
+namespace skywarp {
+
+    class JsonSerializer {
+    public:
+        JsonSerializer();
+        virtual ~JsonSerializer();
+        string serializeRPCResult(string, Json::Value);
+    private:
+        Json::Value generateResultEnvelope(string, Json::Value);
+    };
+
+}
 
 #endif	/* JSONSERIALIZER_H */
 

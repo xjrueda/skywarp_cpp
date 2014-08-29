@@ -49,8 +49,12 @@
 
 using namespace std;
 
-typedef websocketpp::server<websocketpp::config::asio> Server;
-typedef std::function<void(Json::Value, int) > ApplicationHandlerType;
+namespace skywarp {
+
+    typedef websocketpp::server<websocketpp::config::asio> Server;
+    typedef std::function<void(Json::Value, int) > ApplicationHandlerType;
+
+}
 
 #endif	/* GLOBALDATATYPES_H */
 

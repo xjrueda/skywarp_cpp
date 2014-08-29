@@ -28,51 +28,55 @@
 #include "PublishSubscriptionManager.h"
 #include "SessionManager.h"
 
-PublishSubscriptionManager::PublishSubscriptionManager() {
-}
+namespace skywarp {
 
-PublishSubscriptionManager::~PublishSubscriptionManager() {
-}
-
-void PublishSubscriptionManager::registerTopic(string name) {
-    Topic topic;
-    AvailableTopics[name] = topic;
-}
-
-void PublishSubscriptionManager::updateTopic(string name, string value)  {
-    AvailableTopics[name].notify(value);
-}
-
-void PublishSubscriptionManager::updateTopic(string name, Server::message_ptr msg)  {
-    AvailableTopics[name].notify(msg);
-}
-
-void PublishSubscriptionManager::subscribe(SessionManager::Session session, string name) {
-    AvailableTopics[name].attach(session);
-}
-
-void PublishSubscriptionManager::unSubscribe(SessionManager::Session session, string name) {
-    AvailableTopics[name].detach(session);
-}
-
-void PublishSubscriptionManager::unSubscribeAll(SessionManager::Session session) {
-    map<string,Topic>::iterator it;
-    for (it=AvailableTopics.begin();it != AvailableTopics.end(); it++) {
-        it->second.detach(session);
+    PublishSubscriptionManager::PublishSubscriptionManager() {
     }
-}
 
-void PublishSubscriptionManager::onSubscribe(Json::Value params, SessionManager::Session session, string requestId) {
-    string topicName = params["topic"].asString();
-    //SessionManager::Session session = sessionManager->getSessionFromId(sessionId);
-    AvailableTopics[topicName].attach(session);
-}
+    PublishSubscriptionManager::~PublishSubscriptionManager() {
+    }
 
-void PublishSubscriptionManager::onUnsubscribe(Json::Value params, SessionManager::Session session, string requestId) {
-    string topicName = params["topic"].asString();
-    //SessionManager::Session session = sessionManager->getSessionFromId(sessionId);
-    AvailableTopics[topicName].detach(session);
-}
-void PublishSubscriptionManager::setSessionManager(shared_ptr<SessionManager> sm) {
-    sessionManager = sm;
+    void PublishSubscriptionManager::registerTopic(string name) {
+        Topic topic;
+        AvailableTopics[name] = topic;
+    }
+
+    void PublishSubscriptionManager::updateTopic(string name, string value) {
+        AvailableTopics[name].notify(value);
+    }
+
+    void PublishSubscriptionManager::updateTopic(string name, Server::message_ptr msg) {
+        AvailableTopics[name].notify(msg);
+    }
+
+    void PublishSubscriptionManager::subscribe(SessionManager::Session session, string name) {
+        AvailableTopics[name].attach(session);
+    }
+
+    void PublishSubscriptionManager::unSubscribe(SessionManager::Session session, string name) {
+        AvailableTopics[name].detach(session);
+    }
+
+    void PublishSubscriptionManager::unSubscribeAll(SessionManager::Session session) {
+        map<string, Topic>::iterator it;
+        for (it = AvailableTopics.begin(); it != AvailableTopics.end(); it++) {
+            it->second.detach(session);
+        }
+    }
+
+    void PublishSubscriptionManager::onSubscribe(Json::Value params, SessionManager::Session session, string requestId) {
+        string topicName = params["topic"].asString();
+        //SessionManager::Session session = sessionManager->getSessionFromId(sessionId);
+        AvailableTopics[topicName].attach(session);
+    }
+
+    void PublishSubscriptionManager::onUnsubscribe(Json::Value params, SessionManager::Session session, string requestId) {
+        string topicName = params["topic"].asString();
+        //SessionManager::Session session = sessionManager->getSessionFromId(sessionId);
+        AvailableTopics[topicName].detach(session);
+    }
+
+    void PublishSubscriptionManager::setSessionManager(shared_ptr<SessionManager> sm) {
+        sessionManager = sm;
+    }
 }

@@ -55,54 +55,64 @@ using websocketpp::lib::condition_variable;
 
 using namespace std;
 
-class SkywarpServer {
-public:
-    SkywarpServer();
-    virtual ~SkywarpServer();
-    bool onValidateSubprotocol(websocketpp::connection_hdl);
-    void onClose(websocketpp::connection_hdl);
-    void onMessage(websocketpp::connection_hdl, Server::message_ptr msg);
-    void onOpen(websocketpp::connection_hdl);
-    void setMethodHandler(string, MethodDelegatorManager::ApplicationDelegateType, bool);
-    void registerTopic(string name);
-    void publish(string, Json::Value);
-    void run(uint16_t port);
-    void notifyTermination();
-private:
-    enum ActionType {
-        SUBSCRIBE,
-        UNSUBSCRIBE,
-        MESSAGE
+namespace skywarp {
+
+    class SkywarpServer {
+    public:
+        SkywarpServer();
+        virtual ~SkywarpServer();
+        bool onValidateSubprotocol(websocketpp::connection_hdl);
+        void onClose(websocketpp::connection_hdl);
+        void onMessage(websocketpp::connection_hdl, Server::message_ptr msg);
+        void onOpen(websocketpp::connection_hdl);
+        void setMethodHandler(string, MethodDelegatorManager::ApplicationDelegateType, bool);
+        void registerTopic(string name);
+        void publish(string, Json::Value);
+        void run(uint16_t port);
+        void notifyTermination();
+    private:
+
+        enum ActionType {
+            SUBSCRIBE,
+            UNSUBSCRIBE,
+            MESSAGE
+        };
+
+        struct Action {
+
+            Action(ActionType t, websocketpp::connection_hdl h) : type(t), hdl(h) {
+            }
+
+            Action(ActionType t, Server::message_ptr m, websocketpp::connection_hdl h) : type(t), msg(m), hdl(h) {
+            }
+            ActionType type;
+            websocketpp::connection_hdl hdl;
+            Server::message_ptr msg;
+        };
+
+        struct Publication {
+
+            Publication(string name, Json::Value value) : appMessage(value), topicName(name) {
+            }
+            Json::Value appMessage;
+            string topicName;
+        };
+        typedef std::set<connection_hdl, std::owner_less<connection_hdl>> ConnectionListType;
+        Server server;
+        condition_variable actionCondition;
+        condition_variable publishCondition;
+        mutex actionLock;
+        mutex publishingQueueLock;
+        mutex connectionLock;
+        std::queue<Action> actions;
+        ConnectionListType connectionList;
+        std::queue<Publication> publishingQueue;
+        void inboundProcessor(std::promise<std::string>&);
+        void publishingProcessor(std::promise<std::string>&);
+        shared_ptr<SessionManager> sessionManager;
+        PublishSubscriptionManager pubSubManager;
+        MethodDelegatorManager delegatorManager;
+        std::ofstream logfile;
     };
-    struct Action {
-        Action(ActionType t, websocketpp::connection_hdl h) : type(t), hdl(h) {
-        }
-        Action(ActionType t, Server::message_ptr m, websocketpp::connection_hdl h) : type(t), msg(m), hdl(h) {
-        }
-        ActionType type;
-        websocketpp::connection_hdl hdl;
-        Server::message_ptr msg;
-    };
-    struct Publication {
-        Publication(string name, Json::Value value): appMessage(value), topicName(name) {}
-        Json::Value appMessage;
-        string topicName;
-    };
-    typedef std::set<connection_hdl, std::owner_less<connection_hdl>> ConnectionListType;
-    Server server;
-    condition_variable actionCondition;
-    condition_variable publishCondition;
-    mutex actionLock;
-    mutex publishingQueueLock;
-    mutex connectionLock;
-    std::queue<Action> actions;
-    ConnectionListType connectionList;
-    std::queue<Publication> publishingQueue;
-    void inboundProcessor(std::promise<std::string>&);
-    void publishingProcessor(std::promise<std::string>&);
-    shared_ptr<SessionManager> sessionManager;
-    PublishSubscriptionManager pubSubManager;
-    MethodDelegatorManager delegatorManager;
-    std::ofstream logfile;
-};
+}
 #endif // !defined(EA_759A8338_AA08_495b_9E78_7A4268A4B573__INCLUDED_)

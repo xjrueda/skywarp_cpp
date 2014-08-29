@@ -36,33 +36,39 @@
 #include "SessionManager.h"
 
 using namespace std;
-class MethodDelegatorManager {
-public:
-    typedef std::function<void(Json::Value, SessionManager::Session, string)> ApplicationDelegateType;
-    MethodDelegatorManager();
-    virtual ~MethodDelegatorManager();
-    void subscribeDelegate(string, ApplicationDelegateType, bool);
-    void unSubscribeDelegate(string);
-    void callDelegate(string, Json::Value, SessionManager::Session, string);
-private:
-    struct Delegate {
-        void setDelegate(ApplicationDelegateType delegate, bool async) {
-            _delegate=delegate; 
-            launchAsync=async;
-        }
-        ApplicationDelegateType getDelegate() {
-            return _delegate;
-        }
-        
-        bool getlaunchAsync() {
-            return launchAsync;
-        }
-    private:
-        ApplicationDelegateType _delegate;
-        bool launchAsync;
-    };   
-    std::map<string, Delegate> applicationDelegatesMap;
-};
 
+namespace skywarp {
+
+    class MethodDelegatorManager {
+    public:
+        typedef std::function<void(Json::Value, SessionManager::Session, string) > ApplicationDelegateType;
+        MethodDelegatorManager();
+        virtual ~MethodDelegatorManager();
+        void subscribeDelegate(string, ApplicationDelegateType, bool);
+        void unSubscribeDelegate(string);
+        void callDelegate(string, Json::Value, SessionManager::Session, string);
+    private:
+
+        struct Delegate {
+
+            void setDelegate(ApplicationDelegateType delegate, bool async) {
+                _delegate = delegate;
+                launchAsync = async;
+            }
+
+            ApplicationDelegateType getDelegate() {
+                return _delegate;
+            }
+
+            bool getlaunchAsync() {
+                return launchAsync;
+            }
+        private:
+            ApplicationDelegateType _delegate;
+            bool launchAsync;
+        };
+        std::map<string, Delegate> applicationDelegatesMap;
+    };
+}
 #endif	/* METHODDELEGATORMANAGER_H */
 

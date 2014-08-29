@@ -31,75 +31,78 @@
 
 #include "JsonRPCParser.h"
 
-JsonRPCParser::JsonRPCParser() {
-    parsed = false;
-}
+namespace skywarp {
 
-JsonRPCParser::~JsonRPCParser() {
-}
-
-string JsonRPCParser::getMethod() {
-    string method;
-    try {
-        method = jsonMessage["method"].asString();
-    } catch (const exception& e) {
-        throw JsonRPCInvalidRequest(this->id, string("Validating method name: ")+ e.what());
+    JsonRPCParser::JsonRPCParser() {
+        parsed = false;
     }
-    if (method.empty())
-        throw JsonRPCInvalidRequest(this->id, "Method value not specified");
-    const char* c = method.substr(0, 1).c_str();
-    if (std::isdigit(*c))
-        throw JsonRPCInvalidRequest(this->id, "Invalid method name.");
-    return method;
-}
 
-string JsonRPCParser::getVersion() {
-    string version;
-    try {
-        version = jsonMessage["jsonrpc"].asString();
-    } catch (const exception& e) {
-        throw JsonRPCInvalidRequest(this->id, string("Validating version: ")+ e.what());
+    JsonRPCParser::~JsonRPCParser() {
     }
-    if (version.empty())
-        throw JsonRPCInvalidRequest(this->id, "Version value not specified");
-    return version;
 
-}
-
-Json::Value JsonRPCParser::getParams() {
-    Json::Value params;
-    try {
-        params = jsonMessage["params"];
-        return params;
-    } catch (...) {
-        throw JsonRPCInvalidRequest(this->id, "Params value not specified.");
+    string JsonRPCParser::getMethod() {
+        string method;
+        try {
+            method = jsonMessage["method"].asString();
+        } catch (const exception& e) {
+            throw JsonRPCInvalidRequest(this->id, string("Validating method name: ") + e.what());
+        }
+        if (method.empty())
+            throw JsonRPCInvalidRequest(this->id, "Method value not specified");
+        const char* c = method.substr(0, 1).c_str();
+        if (std::isdigit(*c))
+            throw JsonRPCInvalidRequest(this->id, "Invalid method name.");
+        return method;
     }
-}
 
-string JsonRPCParser::getId() {
-    string id;
-    try {
-        id = jsonMessage["id"].asString();
-    } catch (const exception& e) {
-        throw JsonRPCInvalidRequest(this->id, string("Validating Id: ") + e.what());
+    string JsonRPCParser::getVersion() {
+        string version;
+        try {
+            version = jsonMessage["jsonrpc"].asString();
+        } catch (const exception& e) {
+            throw JsonRPCInvalidRequest(this->id, string("Validating version: ") + e.what());
+        }
+        if (version.empty())
+            throw JsonRPCInvalidRequest(this->id, "Version value not specified");
+        return version;
+
     }
-    if (id.empty())
-        JsonRPCInvalidRequest(this->id, "Id value not specified");
-    return id;
-}
 
-bool JsonRPCParser::ready() {
-    return parsed;
-}
+    Json::Value JsonRPCParser::getParams() {
+        Json::Value params;
+        try {
+            params = jsonMessage["params"];
+            return params;
+        } catch (...) {
+            throw JsonRPCInvalidRequest(this->id, "Params value not specified.");
+        }
+    }
 
-void JsonRPCParser::parseMessage(string jsonString) {
-    try {
-        Json::Reader reader;
-        bool parsed = reader.parse(jsonString, jsonMessage);
-        if (parsed)
+    string JsonRPCParser::getId() {
+        string id;
+        try {
             id = jsonMessage["id"].asString();
-    } catch (...) {
-        throw JsonRPCParseError();
+        } catch (const exception& e) {
+            throw JsonRPCInvalidRequest(this->id, string("Validating Id: ") + e.what());
+        }
+        if (id.empty())
+            JsonRPCInvalidRequest(this->id, "Id value not specified");
+        return id;
+    }
+
+    bool JsonRPCParser::ready() {
+        return parsed;
+    }
+
+    void JsonRPCParser::parseMessage(string jsonString) {
+        try {
+            Json::Reader reader;
+            bool parsed = reader.parse(jsonString, jsonMessage);
+            if (parsed)
+                id = jsonMessage["id"].asString();
+        } catch (...) {
+            throw JsonRPCParseError();
+        }
     }
 }
 

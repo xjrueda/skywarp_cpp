@@ -34,22 +34,25 @@
 
 using namespace std;
 
-class Topic {
-public:
-    Topic();
-    virtual ~Topic();
+namespace skywarp {
 
-    void attach(std::shared_ptr<ClientSession> const&);
+    class Topic {
+    public:
+        Topic();
+        virtual ~Topic();
 
-    void detach(std::shared_ptr<ClientSession> const&);
+        void attach(std::shared_ptr<ClientSession> const&);
 
-    void notify(string);
-    
-    void notify(Server::message_ptr);
+        void detach(std::shared_ptr<ClientSession> const&);
 
-private:
-    std::set<std::shared_ptr<ClientSession>> subscribers;
-};
+        void notify(string);
+
+        void notify(Server::message_ptr);
+
+    private:
+        std::set<std::shared_ptr<ClientSession>> subscribers;
+    };
+}
 
 #endif	/* TOPIC_H */
 
