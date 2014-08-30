@@ -52,6 +52,26 @@ namespace skywarp {
 
     }
 
+    string JsonSerializer::serializeRPCError(string requestId, int errCode, string errMessage) {
+        try {
+            Json::Value jsonRPCError;
+            Json::Value errorData;
+
+            errorData["code"] = errCode;
+            errorData["message"] = errMessage;
+
+            jsonRPCError["jsonrpc"] = "2.0";
+            jsonRPCError["error"] = errorData;
+            jsonRPCError["id"] = requestId;
+
+            Json::FastWriter writer;
+            string serializedJsonRPCError = writer.write(jsonRPCError);
+            return serializedJsonRPCError;
+        } catch (...) {
+            // pending exception handling
+        }
+    }
+
     Json::Value JsonSerializer::generateResultEnvelope(string requestId, Json::Value appMessage) {
         try {
             Json::Value JsonRPCResult;
