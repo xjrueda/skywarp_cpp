@@ -89,6 +89,7 @@ namespace skywarp {
                 it->second->sendMessage(messageText);
             }
         } catch (...) {
+             // pending exception handling
         }
     }
 
@@ -99,11 +100,26 @@ namespace skywarp {
                 it->second->sendMessage(msg);
             }
         } catch (...) {
+             // pending exception handling
         }
     }
 
     int SessionManager::getNextSessiionId() {
         nextSessionId++;
         return nextSessionId;
+    }
+    
+    void SessionManager::closeAllSessions(string reason) {
+        try {
+            SessionListByIdListType::iterator it;
+            for (it = sessionsById.begin(); it != sessionsById.end(); it++) {
+                websocketpp::connection_hdl conHdl;
+                conHdl = it->second->getConnectionHandler();
+                websocketpp::close::status::value v;
+                server->close(conHdl,v,reason);
+                this->removeSession(conHdl);
+            }
+        } catch (...) {
+        }
     }
 }

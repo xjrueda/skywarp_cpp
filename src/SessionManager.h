@@ -52,6 +52,7 @@ namespace skywarp {
         Session getsessionFromHandler(websocketpp::connection_hdl);
         void broadcastMessage(string);
         void broadcastMessage(Server::message_ptr);
+        void closeAllSessions(string);
     private:
         int getNextSessiionId();
         Server* server;
