@@ -69,7 +69,10 @@ namespace skywarp {
         void registerTopic(string name);
         void publish(string, Json::Value);
         void run(uint16_t port);
-        void notifyTermination();
+        void stopperDelegate(Json::Value, SessionManager::Session, string);
+        void stop();
+        void notifyAnormalTermination();
+        void notifyNormalTermination();
     private:
 
         enum ActionType {
@@ -102,6 +105,7 @@ namespace skywarp {
         condition_variable actionCondition;
         condition_variable publishCondition;
         mutex actionLock;
+        mutex statusLock;
         mutex publishingQueueLock;
         mutex connectionLock;
         std::queue<Action> actions;

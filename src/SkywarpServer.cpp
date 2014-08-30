@@ -86,7 +86,6 @@ namespace skywarp {
                 ),
                 false
                 );
-
     }
 
     SkywarpServer::~SkywarpServer() {
@@ -135,7 +134,7 @@ namespace skywarp {
 
     void SkywarpServer::publishingProcessor(std::promise<std::string>& p) {
         try {
-            while (1) {
+            while (server.is_listening()) {
                 unique_lock<mutex> lock(publishingQueueLock);
 
                 while (publishingQueue.empty()) {
@@ -157,21 +156,21 @@ namespace skywarp {
         delegatorManager.subscribeDelegate(jsonrcpMethod, methodHandler, asynchronous);
     }
 
-    void SkywarpServer::notifyTermination() {
-        ConnectionListType::iterator it;
-        websocketpp::close::status::value cod = 1;
-        for (it = connectionList.begin(); it != connectionList.end(); ++it) {
-            try {
-                string msg = "{\"jsonrpc\": \"2.0\", \"error\": {\"code\": -32000, \"message\": \"Server error\"},\"id\":null}";
-                server.send(*it, msg, websocketpp::frame::opcode::text);
-            } catch (...) {
-            }
-        }
+    void SkywarpServer::notifyAnormalTermination() {
+        JsonSerializer serializer;
+        string message = serializer.serializeRPCError("", -32000, "Server error.");
+        sessionManager->broadcastMessage(message);
+    }
+
+    void SkywarpServer::notifyNormalTermination() {
+        JsonSerializer serializer;
+        string message = serializer.serializeRPCError("", -32001, "Server stop method called.");
+        sessionManager->broadcastMessage(message);
     }
 
     void SkywarpServer::inboundProcessor(std::promise<std::string>& p) {
         try {
-            while (1) {
+            while (server.is_listening()) {
                 unique_lock<mutex> lock(actionLock);
 
                 while (actions.empty()) {
@@ -201,12 +200,8 @@ namespace skywarp {
                 }
             }
         } catch (...) {
-            notifyTermination();
-            usleep(10000);
-            server.stop_listening();
-            server.stop_perpetual();
-            server.stop();
-            p.set_exception(std::current_exception());
+            notifyAnormalTermination();
+            this->stop();
         }
     }
 
@@ -223,6 +218,12 @@ namespace skywarp {
 
     void SkywarpServer::run(uint16_t port) {
         try {
+            
+            // listen on specified port
+            server.listen(port);
+
+            // Start the server accept loop
+            server.start_accept();
             std::promise<std::string> p1, p2;
 
             // lauch the processor for publications from host application
@@ -233,14 +234,11 @@ namespace skywarp {
             thread t2(bind(&SkywarpServer::inboundProcessor, this, std::ref(p2)));
             std::shared_future<std::string> f2(p2.get_future().share());
 
-            // listen on specified port
-            server.listen(port);
-
-            // Start the server accept loop
-            server.start_accept();
-
+           
             // Start the ASIO io_service run loop
+            server.start_perpetual();
             server.run();
+            
 
             t1.join();
             t2.join();
@@ -252,5 +250,19 @@ namespace skywarp {
         } catch (...) {
             std::cerr << "Other exception" << std::endl;
         }
+    }
+
+    void SkywarpServer::stopperDelegate(Json::Value params, SessionManager::Session session, string requestId) {
+        notifyNormalTermination();  
+        this->stop();
+    }
+
+    void SkywarpServer::stop() {
+        usleep(10000);
+        server.stop_listening();
+        Json::Value x;
+        this->publish("",x);
+        server.stop_perpetual();
+        server.stop();
     }
 }
