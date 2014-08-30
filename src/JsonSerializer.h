@@ -39,10 +39,11 @@ namespace skywarp {
         JsonSerializer();
         virtual ~JsonSerializer();
         string serializeRPCResult(string, Json::Value);
+        string serializeRPCError(string, int, string errMessage);
+        
     private:
         Json::Value generateResultEnvelope(string, Json::Value);
     };
-
 }
 
 #endif	/* JSONSERIALIZER_H */
