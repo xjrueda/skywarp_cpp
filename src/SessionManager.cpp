@@ -78,7 +78,7 @@ namespace skywarp {
         try {
             return sessionsByHandler[conHdl];
         } catch (...) {
-            throw InvalidConnectionHandler();
+            return nullptr;
         }
     };
 
@@ -89,7 +89,7 @@ namespace skywarp {
                 it->second->sendMessage(messageText);
             }
         } catch (...) {
-             // pending exception handling
+            // pending exception handling
         }
     }
 
@@ -100,7 +100,7 @@ namespace skywarp {
                 it->second->sendMessage(msg);
             }
         } catch (...) {
-             // pending exception handling
+            // pending exception handling
         }
     }
 
@@ -108,7 +108,7 @@ namespace skywarp {
         nextSessionId++;
         return nextSessionId;
     }
-    
+
     void SessionManager::closeAllSessions(string reason) {
         try {
             SessionListByIdListType::iterator it;
@@ -116,7 +116,7 @@ namespace skywarp {
                 websocketpp::connection_hdl conHdl;
                 conHdl = it->second->getConnectionHandler();
                 websocketpp::close::status::value v;
-                server->close(conHdl,v,reason);
+                server->close(conHdl, v, reason);
                 this->removeSession(conHdl);
             }
         } catch (...) {

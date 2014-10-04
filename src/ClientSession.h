@@ -48,6 +48,7 @@ namespace skywarp {
         void sendMessage(string);
         void sendMessage(Server::message_ptr);
         void sendResultMessage(string, Json::Value);
+        void sendErrorMessage(string requestId, string errorText);
         int getId();
         websocketpp::connection_hdl getConnectionHandler();
     private:

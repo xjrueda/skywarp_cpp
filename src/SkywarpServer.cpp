@@ -122,7 +122,6 @@ namespace skywarp {
     void SkywarpServer::onClose(websocketpp::connection_hdl hdl) {
         pubSubManager.unSubscribeAll(sessionManager->getsessionFromHandler(hdl));
         sessionManager->removeSession(hdl);
-
     }
 
     void SkywarpServer::onMessage(websocketpp::connection_hdl hdl, Server::message_ptr msg) {
@@ -182,13 +181,15 @@ namespace skywarp {
                 JsonRPCParser msgParser;
                 SessionManager::Session session = sessionManager->getsessionFromHandler(a.hdl);
                 try {
-                    msgParser.parseMessage(a.msg->get_payload());
-                    string requestId = msgParser.getId();
-                    string version = msgParser.getVersion();
-                    string method = msgParser.getMethod();
-                    Json::Value params = msgParser.getParams();
-                    // delegates the method to it handler
-                    delegatorManager.callDelegate(method, params, session, requestId);
+                    if (!(session == nullptr)) {
+                        msgParser.parseMessage(a.msg->get_payload());
+                        string requestId = msgParser.getId();
+                        string version = msgParser.getVersion();
+                        string method = msgParser.getMethod();
+                        Json::Value params = msgParser.getParams();
+                        // delegates the method to it handler
+                        delegatorManager.callDelegate(method, params, session, requestId);
+                    }
                 } catch (JsonRPCMethodException& e0) {
                     session->sendMessage(e0.what());
                 } catch (JsonRPCParseError& e1) {
@@ -218,7 +219,7 @@ namespace skywarp {
 
     void SkywarpServer::run(uint16_t port) {
         try {
-            
+
             // listen on specified port
             server.listen(port);
 
@@ -234,11 +235,11 @@ namespace skywarp {
             thread t2(bind(&SkywarpServer::inboundProcessor, this, std::ref(p2)));
             std::shared_future<std::string> f2(p2.get_future().share());
 
-           
+
             // Start the ASIO io_service run loop
             server.start_perpetual();
             server.run();
-            
+
 
             t1.join();
             t2.join();
@@ -253,7 +254,7 @@ namespace skywarp {
     }
 
     void SkywarpServer::stopperDelegate(Json::Value params, SessionManager::Session session, string requestId) {
-        notifyNormalTermination();  
+        notifyNormalTermination();
         this->stop();
     }
 
@@ -261,7 +262,7 @@ namespace skywarp {
         usleep(10000);
         server.stop_listening();
         Json::Value x;
-        this->publish("",x);
+        this->publish("", x);
         server.stop_perpetual();
         server.stop();
     }

@@ -64,6 +64,12 @@ namespace skywarp {
         string resultMessage = serializer.serializeRPCResult(requestId, resultData);
         server->send(connectionHdl, resultMessage, websocketpp::frame::opcode::text);
     }
+    
+    void ClientSession::sendErrorMessage(string requestId, string errorText) {
+        JsonSerializer serializer;
+        string errorMessage = serializer.serializeRPCError(requestId,-32001,errorText);
+        server->send(connectionHdl, errorMessage, websocketpp::frame::opcode::text);
+    }
 
     int ClientSession::getId() {
         return sessionId;
