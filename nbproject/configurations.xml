@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="94">
+<configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -46,6 +46,7 @@
     </logicalFolder>
     <itemPath>LICENSE.md</itemPath>
     <itemPath>README.md</itemPath>
+    <itemPath>googleb5c9ffbb55e8bbb0.html</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -76,6 +77,8 @@
       <item path="LICENSE.md" ex="false" tool="3" flavor2="0">
       </item>
       <item path="README.md" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="googleb5c9ffbb55e8bbb0.html" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/ClientSession.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -141,6 +144,8 @@
       <item path="LICENSE.md" ex="false" tool="3" flavor2="0">
       </item>
       <item path="README.md" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="googleb5c9ffbb55e8bbb0.html" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/ClientSession.cpp" ex="false" tool="1" flavor2="0">
       </item>
